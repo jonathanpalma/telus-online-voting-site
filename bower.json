@@ -1,0 +1,26 @@
+{
+  "name": "telus-online-voting-site",
+  "homepage": "https://github.com/jonathanpalma/telus-online-voting-site",
+  "authors": [
+    "Jonathan Palma <tanpalma04@gmail.com>"
+  ],
+  "description": "Developer test with the aim of evaluate knowledge and technical skills in web development areas",
+  "main": "null",
+  "license": "Apache 2.0",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "project/public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "normalize-css": "^5.0.0",
+    "materialize": "^0.97.7",
+    "angular": "angularjs#^1.5.8",
+    "angular-chart.js": "^1.0.3",
+    "sweetalert2": "^5.3.8"
+  }
+}

@@ -1,12 +1,11 @@
 package controllers;
 
-import models.Person;
-import models.PersonRepository;
 import play.mvc.*;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import views.html.*;
 
 /**
  * The main set of web services.
@@ -15,13 +14,14 @@ import javax.inject.Singleton;
 @Singleton
 public class Application extends Controller {
 
-    private final PersonRepository personRepository;
+    //private final PersonRepository personRepository;
 
     // We are using constructor injection to receive a repository to support our desire for immutability.
-    @Inject
-    public Application(final PersonRepository personRepository) {
-        this.personRepository = personRepository;
-    }
+    //@Inject
+    //public Application(final PersonRepository personRepository) {
+
+        //this.personRepository = personRepository;
+    //}
 
     public Result index() {
 
@@ -29,7 +29,7 @@ public class Application extends Controller {
         // the db so we know that we're round-tripping to the db and back in order to demonstrate something
         // interesting. Spring Data takes care of transactional concerns and the following code is all
         // executed on the same thread (a requirement of the JPA entity manager).
-
+/*
         final Person person = new Person();
         person.firstname = "Bruce";
         person.surname = "Smith";
@@ -39,7 +39,8 @@ public class Application extends Controller {
         final Person retrievedPerson = personRepository.findOne(savedPerson.id);
 
         // Deliver the index page with a message showing the id that was generated.
+*/
+        return ok(index.render("", false));
 
-        return ok(views.html.index.render("Found id: " + retrievedPerson.id + " of person/people"));
     }
 }
