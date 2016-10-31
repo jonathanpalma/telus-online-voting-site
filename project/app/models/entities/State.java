@@ -5,6 +5,9 @@
  */
 package models.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -12,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -29,8 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s"),
     @NamedQuery(name = "State.findById", query = "SELECT s FROM State s WHERE s.id = :id"),
-    @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name"),
-    @NamedQuery(name = "State.findByCountryId", query = "SELECT s FROM State s WHERE s.countryId = :countryId")})
+    @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name")})
 public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,10 +48,10 @@ public class State implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "country_id")
-    private int countryId;
+    @JsonIgnore
+    @JoinColumn(name = "country_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Country countryId;
 
     public State() {
     }
@@ -56,10 +60,9 @@ public class State implements Serializable {
         this.id = id;
     }
 
-    public State(Integer id, String name, int countryId) {
+    public State(Integer id, String name) {
         this.id = id;
         this.name = name;
-        this.countryId = countryId;
     }
 
     public Integer getId() {
@@ -78,11 +81,11 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    public int getCountryId() {
+    public Country getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(int countryId) {
+    public void setCountryId(Country countryId) {
         this.countryId = countryId;
     }
 
@@ -108,7 +111,7 @@ public class State implements Serializable {
 
     @Override
     public String toString() {
-        return "models.entities.State[ id=" + id + " ]";
+        return "models.State[ id=" + id + " ]";
     }
     
 }

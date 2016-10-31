@@ -37,3 +37,12 @@
 #state {
     text-align: center;
 }
+.input_field {
+    color: black;
+}
+select {
+    display: inherit !important;
+}
+.select-container {
+    padding: 0 25%;
+}

@@ -16,7 +16,7 @@ import javax.inject.Singleton;
 @Singleton
 public interface PersonRepository extends CrudRepository<Person, Long> {
 
-    @Query("SELECT p.pass FROM Person p WHERE p.iddocument = :username")
+    @Query("SELECT p.pass FROM Person p WHERE p.iddocument = :iddocument")
     String findPassByDocument(@Param("iddocument") String iddocument);
 
     @Query("SELECT p FROM Person p WHERE p.iddocument = :iddocument")

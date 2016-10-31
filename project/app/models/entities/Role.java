@@ -5,6 +5,8 @@
  */
 package models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -47,6 +49,7 @@ public class Role implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "name")
     private String name;
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
     private List<Person> personList;
 

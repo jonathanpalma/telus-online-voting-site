@@ -1,5 +1,7 @@
 package models.forms;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
+
 /**
  * Created by palma on 10/30/16.
  */
@@ -8,14 +10,16 @@ public class SessionForm {
     private String name;
     private Integer roleId;
     private String roleName;
+    private Boolean admin;
 
     public SessionForm() { }
 
-    public SessionForm(String user, String name, Integer roleId, String roleName) {
+    public SessionForm(String user, String name, Integer roleId, String roleName, Boolean isAdmin) {
         this.user = user;
         this.name = name;
         this.roleId = roleId;
         this.roleName = roleName;
+        this.admin = admin;
     }
 
     public String getUser() {
@@ -48,5 +52,9 @@ public class SessionForm {
 
     public void setRoleName(String roleName) {
         this.roleName = roleName;
+    }
+
+    public Boolean isAdmin() {
+        return this.admin;
     }
 }

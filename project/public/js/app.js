@@ -13,10 +13,26 @@ app.config(['ChartJsProvider', function (ChartJsProvider) {
 }])
 
 
-controllers.chartCtrl = function ($scope, $interval) {
+controllers.chartCtrl = function ($scope, $interval, $http) {
     $scope.labels = ["Candidate 1", "Candidate 2", "Candidate 3"];
     $scope.data = [300, 500, 100];
     $scope.statistics = [];
+    $scope.countries = [];
+
+    $http.get("/api/country")
+        .success(function(data) {
+            $scope.countries = data;
+        });
+
+    $scope.changeTab = function(type){
+        console.log("Tab changed to " + type);
+
+        if (type != 'country'){
+
+        } else {
+
+        }
+    };
 
     for(var i = 0; i < $scope.data.length; i++){
         $scope.statistics.push({ label: $scope.labels[i], data: $scope.data[i]}) ;

@@ -46,11 +46,11 @@ public class Authentication {
                 }
                 return redirect("/user");
             } else {
-                return status(401, "Usuario o contraseña incorrecta");
+                return status(401, "The user or/and password are incorrect");
                 //return ok(login.render("Usuario o contraseña incorrecta", true));
             }
         }
-        return badRequest("Error. No se enviaron los parametros requeridos");
+        return badRequest("Error. Required fields weren't received");
     }
     public Person login(String document, String pass){
         Person user = null;
@@ -74,7 +74,7 @@ public class Authentication {
         return redirect(url);
     }
     public Result unauthorized() {
-        return status(401, "Acceso no autorizado");
+        return status(401, "Unauthorized access");
         //return ok(login.render("Usuario no autorizado", true));
     }
     public boolean isLogged(){
