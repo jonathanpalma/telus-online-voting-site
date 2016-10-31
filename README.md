@@ -81,6 +81,10 @@ Developer test with the aim of evaluate knowledge and technical skills in web de
 ![Voting demo](https://github.com/jonathanpalma/telus-online-voting-site/blob/master/README/voting-demo.png)
 
 
+... but the best part is that statistics are reactive :raised_hands::fire:
+
+![Demo](https://github.com/jonathanpalma/telus-online-voting-site/blob/master/README/demo.gif)
+
 - [Web service to provide information to external resources](https://github.com/jonathanpalma/telus-online-voting-site/blob/master/project/app/controllers/web/Api.java).
 
 ![WS demo](https://github.com/jonathanpalma/telus-online-voting-site/blob/master/README/ws-demo.png)
