@@ -71,7 +71,7 @@ Developer test with the aim of evaluate knowledge and technical skills in web de
 ## Deliverables
 
 - Entity Relationship diagram.
-
+![Database diagram](https://github.com/jonathanpalma/telus-online-voting-site/blob/master/README/db-diagram.png)
 
 - [Database Scripts](https://github.com/jonathanpalma/telus-online-voting-site/tree/master/project/conf/db/migration/default).
 
