@@ -75,16 +75,12 @@ public class Api extends Controller {
 
     public Result userSession(){
         if (!auth.isLogged()){ return auth.unauthorized(); }
-        Boolean isAdmin = null;
-        if (session().get("admin") != null){
-            isAdmin = true;
-        }
         SessionForm session = new SessionForm(
                 session().get("document"),
                 session().get("user"),
                 Integer.parseInt(session().get("rolId")),
                 session().get("rolName"),
-                isAdmin);
+                Integer.parseInt(session().get("countryId")));
         return ok(Json.toJson(session));
     }
 

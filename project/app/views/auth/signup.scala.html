@@ -1,7 +1,7 @@
 @(msg: String, error: Boolean, isLogged: Boolean)
 @views.html.template.header("Signup")
 
-@views.html.template.nav(isLogged)
+@views.html.template.nav(isLogged, false)
 
 @if(msg != null && !error) {
     <script type="application/javascript">
@@ -23,10 +23,10 @@
     </script>
 }
 
-<div ng-app="votingApp" class="container">
+<div class="container" ng-controller="signupCtrl">
     <h3>Signup</h3>
 
-    <div class="row" ng-controller="signupCtrl">
+    <div class="row" >
         <form class="col s12" action="/signup" method="post">
             <div class="row">
                 <div class="input-field col s6">

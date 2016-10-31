@@ -1,9 +1,9 @@
-@(header: String, isLogged: Boolean)
+@(header: String, isLogged: Boolean, isAdmin: Boolean)
 @views.html.template.header(header)
 
-@views.html.template.nav(isLogged)
+@views.html.template.nav(isLogged, isAdmin)
 
-<div ng-app="votingApp" ng-controller="chartCtrl">
+<div ng-controller="chartCtrl">
     <div class="col s12">
         <ul class="tabs">
             <li class="tab col s3" ng-click="changeTab('country')"><a class="active" href="#presidential">Presidential</a></li>

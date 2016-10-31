@@ -6,7 +6,9 @@
 .brand-logo {
     margin-left: 15px;
 }
-
+.logout {
+    margin-left: 15px;
+}
 .log-out {
     display: inline;
     padding: 0;

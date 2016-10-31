@@ -1,7 +1,7 @@
 @(msg: String, error: Boolean, isLogged: Boolean)
 @views.html.template.header("Login")
 
-@views.html.template.nav(isLogged)
+@views.html.template.nav(isLogged, false)
 
 @if(msg != null && error == true){
     <script type="application/javascript">

@@ -5,6 +5,7 @@ import play.mvc.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.sound.sampled.BooleanControl;
 
 import views.html.*;
 import views.html.auth.*;
@@ -23,7 +24,7 @@ public class Application extends Controller {
     }
 
     public Result index() {
-        return ok(index.render("Home", auth.isLogged()));
+        return ok(index.render("Home", auth.isLogged(), auth.isAdmin()));
     }
 
     public Result login() {

@@ -12,6 +12,14 @@ app.config(['ChartJsProvider', function (ChartJsProvider) {
     });
 }]);
 
+controllers.navCtrl = function($scope, $http){
+    $scope.user = {};
+
+    $http.get("/api/session")
+        .success(function(data) {
+            $scope.user = data;
+        });
+};
 
 controllers.chartCtrl = function ($scope, $interval, $http) {
     $scope.labels = ["Candidate 1", "Candidate 2", "Candidate 3"];

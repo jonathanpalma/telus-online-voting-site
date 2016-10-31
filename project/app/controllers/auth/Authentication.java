@@ -40,6 +40,7 @@ public class Authentication {
                 session().put("user", user.getName() + " " + user.getSurname());
                 session().put("rolId", user.getRoleId().getId().toString());
                 session().put("rolName", user.getRoleId().getName());
+                session().put("countryId", user.getCountryId().getId().toString());
 
                 //Checking if user is an administrator
                 if (user.getRoleId().getName().equals("Admin")){
@@ -80,6 +81,10 @@ public class Authentication {
     }
     public boolean isLogged(){
         return (!(session().isEmpty() || session() == null));
+    }
+
+    public boolean isAdmin() {
+        return (isLogged() && session().get("admin") != null);
     }
 
 }
