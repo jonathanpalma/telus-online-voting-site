@@ -3,38 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author palma
  */
 @Entity
-@Table(name = "role")
+@Table(name = "official_participation")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
-    @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
-    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
-public class Role implements Serializable {
+    @NamedQuery(name = "OfficialParticipation.findAll", query = "SELECT o FROM OfficialParticipation o"),
+    @NamedQuery(name = "OfficialParticipation.findById", query = "SELECT o FROM OfficialParticipation o WHERE o.id = :id"),
+    @NamedQuery(name = "OfficialParticipation.findByVotes", query = "SELECT o FROM OfficialParticipation o WHERE o.votes = :votes")})
+public class OfficialParticipation implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -44,22 +41,22 @@ public class Role implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "name")
-    private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
-    private List<Person> personList;
+    @Column(name = "votes")
+    private int votes;
+    @JoinColumn(name = "candidate_id", referencedColumnName = "id")
+    @ManyToOne
+    private Candidate candidateId;
 
-    public Role() {
+    public OfficialParticipation() {
     }
 
-    public Role(Integer id) {
+    public OfficialParticipation(Integer id) {
         this.id = id;
     }
 
-    public Role(Integer id, String name) {
+    public OfficialParticipation(Integer id, int votes) {
         this.id = id;
-        this.name = name;
+        this.votes = votes;
     }
 
     public Integer getId() {
@@ -70,21 +67,20 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getVotes() {
+        return votes;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setVotes(int votes) {
+        this.votes = votes;
     }
 
-    @XmlTransient
-    public List<Person> getPersonList() {
-        return personList;
+    public Candidate getCandidateId() {
+        return candidateId;
     }
 
-    public void setPersonList(List<Person> personList) {
-        this.personList = personList;
+    public void setCandidateId(Candidate candidateId) {
+        this.candidateId = candidateId;
     }
 
     @Override
@@ -97,10 +93,10 @@ public class Role implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Role)) {
+        if (!(object instanceof OfficialParticipation)) {
             return false;
         }
-        Role other = (Role) object;
+        OfficialParticipation other = (OfficialParticipation) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +105,7 @@ public class Role implements Serializable {
 
     @Override
     public String toString() {
-        return "models.Role[ id=" + id + " ]";
+        return "models.entities.OfficialParticipation[ id=" + id + " ]";
     }
     
 }

@@ -1,0 +1,41 @@
+@(msg: String, error: Boolean, isLogged: Boolean)
+@views.html.template.header("Login")
+
+@views.html.template.nav(isLogged, false)
+
+@if(msg != null && error == true){
+    <script type="application/javascript">
+            swal({
+                title: 'Error!',
+                text: '@msg',
+                type: 'error'
+            })
+    </script>
+}
+
+<div class="container">
+    <h3>Login</h3>
+
+    <div class="row">
+        <form class="col s12" action="/login" method="post">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Document ID" id="document" name="document" type="text" class="validate" required>
+                    <label for="document">Document ID</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Password" id="pass" name="pass" type="password" class="validate" required>
+                    <label for="pass">Password</label>
+                </div>
+            </div>
+
+            <button class="btn waves-effect waves-light telus-green" type="submit" name="action">Login
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+</div>
+
+@views.html.template.footer()

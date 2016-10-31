@@ -1,0 +1,74 @@
+@(msg: String, error: Boolean, isLogged: Boolean)
+@views.html.template.header("Signup")
+
+@views.html.template.nav(isLogged, false)
+
+@if(msg != null && !error) {
+    <script type="application/javascript">
+            swal(
+                    'Welcome!',
+                    '@msg',
+                    'success'
+            );
+    </script>
+}
+
+@if(msg != null && error == true) {
+    <script type="application/javascript">
+            swal({
+                title: 'Error!',
+                text: '@msg',
+                type: 'error'
+            })
+    </script>
+}
+
+<div class="container" ng-controller="signupCtrl">
+    <h3>Signup</h3>
+
+    <div class="row" >
+        <form class="col s12" action="/signup" method="post">
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Name" id="name" name="name" type="text" class="validate" required>
+                    <label for="name">Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Sur Name" id="surname" name="surname" type="text" class="validate" required>
+                    <label for="surname">Sur Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input placeholder="Document ID" id="document" name="document" type="text" class="validate" required>
+                    <label for="document">Document ID</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input placeholder="Password" id="pass" name="pass" type="password" class="validate" required>
+                    <label for="pass">Password</label>
+                </div>
+                <div class="input-field col s6">
+                    <input placeholder="Confirm Password" id="passConfirm" name="passConfirm" type="password" class="validate" required>
+                    <label for="passConfirm">Confirm Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="select-container">
+                    <select name="countryId">
+                        <option value="" disabled selected>Choose a country</option>
+                        <option ng-repeat="c in countries" value="{{::c.id}}">{{::c.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn waves-effect waves-light telus-green" type="submit" name="action">Signup
+                <i class="material-icons right">send</i>
+            </button>
+
+        </form>
+    </div>
+</div>
+
+@views.html.template.footer()

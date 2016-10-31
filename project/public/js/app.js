@@ -10,13 +10,41 @@ app.config(['ChartJsProvider', function (ChartJsProvider) {
         responsive: true,
         maintainAspectRatio: false
     });
-}])
+}]);
 
+controllers.navCtrl = function($scope, $http){
+    $scope.user = {};
 
-controllers.chartCtrl = function ($scope, $interval) {
+    $http.get("/api/session")
+        .success(function(data) {
+            $scope.user = data;
+        });
+};
+
+controllers.chartCtrl = function ($scope, $interval, $http) {
     $scope.labels = ["Candidate 1", "Candidate 2", "Candidate 3"];
-    $scope.data = [300, 500, 100];
+    $scope.data = [
+        Math.floor((Math.random() * 150) + 1),
+        Math.floor((Math.random() * 150) + 1),
+        Math.floor((Math.random() * 150) + 1)
+    ];
     $scope.statistics = [];
+    $scope.countries = [];
+
+    $http.get("/api/country")
+        .success(function(data) {
+            $scope.countries = data;
+        });
+
+    $scope.changeTab = function(type){
+        console.log("Tab changed to " + type);
+
+        if (type != 'country'){
+
+        } else {
+
+        }
+    };
 
     for(var i = 0; i < $scope.data.length; i++){
         $scope.statistics.push({ label: $scope.labels[i], data: $scope.data[i]}) ;
@@ -30,6 +58,15 @@ controllers.chartCtrl = function ($scope, $interval) {
         console.log("data: " + JSON.stringify($scope.data));
         $scope.$emit('$resize');
     }, 5000);
+};
+
+controllers.signupCtrl = function($scope, $http){
+    $scope.countries = [];
+
+    $http.get("/api/countries")
+        .success(function(data) {
+            $scope.countries = data;
+        });
 };
 
 app.controller(controllers);

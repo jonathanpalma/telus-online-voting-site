@@ -1,5 +1,6 @@
-package models;
+package models.repositories;
 
+import models.entities.ElectionType;
 import org.springframework.data.repository.CrudRepository;
 
 import javax.inject.Named;

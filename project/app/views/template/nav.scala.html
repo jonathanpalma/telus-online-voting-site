@@ -1,15 +1,19 @@
-@(isLogged:Boolean)
+@(isLogged:Boolean, isAdmin:Boolean)
 <!-- navigation -->
 <nav class="purple darken-3">
-    <div class="nav-wrapper">
-        <a class="brand-logo">Online voting</a>
+    <div ng-controller="navCtrl" class="nav-wrapper">
+        <a href="/" class="brand-logo">Online voting</a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             @if(!isLogged) {
-                <li><a href="#">Sign up</a></li>
-                <li><a href="#">Login</a></li>
+                <li><a href="/signup">Sign up</a></li>
+                <li><a href="/login">Login</a></li>
             }
             @if(isLogged) {
-                <li>User, <a href="#" class="log-out">Log out</a></li>
+                @if(isAdmin){
+                    <li><a href="/signup">Admin</a></li>
+                }
+                <li><a href="/login">Vote</a></li>
+                <li class="logout">{{user.name}}, <a href="/logout" class="log-out">Log out</a></li>
             }
         </ul>
 

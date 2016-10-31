@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,8 +16,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -30,13 +30,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author palma
  */
 @Entity
-@Table(name = "committee")
+@Table(name = "role")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Committee.findAll", query = "SELECT c FROM Committee c"),
-    @NamedQuery(name = "Committee.findById", query = "SELECT c FROM Committee c WHERE c.id = :id"),
-    @NamedQuery(name = "Committee.findByName", query = "SELECT c FROM Committee c WHERE c.name = :name")})
-public class Committee implements Serializable {
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
+    @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
+    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,23 +46,21 @@ public class Committee implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 25)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "committeeId")
-    private List<Candidate> candidateList;
-    @JoinColumn(name = "country_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Country countryId;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private List<Person> personList;
 
-    public Committee() {
+    public Role() {
     }
 
-    public Committee(Integer id) {
+    public Role(Integer id) {
         this.id = id;
     }
 
-    public Committee(Integer id, String name) {
+    public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -84,20 +82,12 @@ public class Committee implements Serializable {
     }
 
     @XmlTransient
-    public List<Candidate> getCandidateList() {
-        return candidateList;
+    public List<Person> getPersonList() {
+        return personList;
     }
 
-    public void setCandidateList(List<Candidate> candidateList) {
-        this.candidateList = candidateList;
-    }
-
-    public Country getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(Country countryId) {
-        this.countryId = countryId;
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
     }
 
     @Override
@@ -110,10 +100,10 @@ public class Committee implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Committee)) {
+        if (!(object instanceof Role)) {
             return false;
         }
-        Committee other = (Committee) object;
+        Role other = (Role) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -122,7 +112,7 @@ public class Committee implements Serializable {
 
     @Override
     public String toString() {
-        return "models.Committee[ id=" + id + " ]";
+        return "models.entities.Role[ id=" + id + " ]";
     }
     
 }

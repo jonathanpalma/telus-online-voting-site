@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -109,7 +109,7 @@ public class ElectionType implements Serializable {
 
     @Override
     public String toString() {
-        return "models.ElectionType[ id=" + id + " ]";
+        return "models.entities.ElectionType[ id=" + id + " ]";
     }
     
 }

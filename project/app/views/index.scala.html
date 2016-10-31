@@ -1,28 +1,46 @@
-@(erroMsg: String, error: Boolean)
-@views.html.template.header("Iniciar Sesión")
+@(header: String, isLogged: Boolean, isAdmin: Boolean)
+@views.html.template.header(header)
 
-@views.html.template.nav(true)
+@views.html.template.nav(isLogged, isAdmin)
 
-<div ng-app="votingApp" ng-controller="chartCtrl">
+<div ng-controller="chartCtrl">
     <div class="col s12">
         <ul class="tabs">
-            <li class="tab col s3"><a class="active" href="#presidential">Presidential</a></li>
-            <li class="tab col s3"><a href="#state">State</a></li>
+            <li class="tab col s3" ng-click="changeTab('country')"><a class="active" href="#presidential">Presidential</a></li>
+            <li class="tab col s3" ng-click="changeTab('state')"><a href="#state">State</a></li>
         </ul>
     </div>
 
     <div id="presidential" class="col s12">
-        <h3>Presidential elections</h3>
+        <h4>Presidential elections</h4>
+
+        <div class="select-container">
+            <select>
+                <option value="" disabled selected>Choose a country</option>
+                <option ng-repeat="c in countries" value="{{::c.id}}">{{::c.name}}</option>
+            </select>
+        </div>
+
     </div>
 
     <div id="state" class="col s12">
-        <h3>State elections</h3>
+        <h4>State elections</h4>
+
+        <div class="select-container">
+            <select>
+                <option value="" disabled selected>Choose a state</option>
+                <optgroup ng-repeat="c in countries" label="{{::c.name}}">
+                    <option ng-repeat="s in c.stateList" value="{{::s.i}}">{{::s.name}}</option>
+                </optgroup>
+            </select>
+        </div>
+
     </div>
 
     <div class="chart-container">
         <div class="dashboard row valign-wrapper">
             <div class="col s8 m8 l6">
-                <h4>Statistics</h4>
+                <h5>Statistics</h5>
 
                 <table class="statistics-table">
                     <thead>
