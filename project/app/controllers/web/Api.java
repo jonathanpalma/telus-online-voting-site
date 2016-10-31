@@ -2,10 +2,7 @@ package controllers.web;
 
 import com.google.common.collect.Lists;
 import controllers.auth.Authentication;
-import models.entities.Country;
-import models.entities.Role;
-import models.entities.Person;
-import models.entities.State;
+import models.entities.*;
 import models.forms.SessionForm;
 import models.repositories.CountryRepository;
 import models.repositories.RoleRepository;
@@ -16,6 +13,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,6 +55,17 @@ public class Api extends Controller {
     public Result country(){
         List<Country> countries = Lists.newArrayList(countryRepo.findAll());
         return ok(Json.toJson(countries));
+    }
+
+    public Result countryMinified(){
+        List<Country> countries = Lists.newArrayList(countryRepo.findAll());
+        List<CountryMinified> countriesMin = new ArrayList<CountryMinified>();
+
+        for(Country c : countries){
+            countriesMin.add(new CountryMinified(c));
+        }
+
+        return ok(Json.toJson(countriesMin));
     }
 
     public Result state(){

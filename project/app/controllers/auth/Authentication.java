@@ -11,6 +11,7 @@ import javax.inject.Named;
 import static play.mvc.Http.Context.Implicit.session;
 import static play.mvc.Results.*;
 
+import views.html.auth.*;
 
 /**
  * Created by palma on 10/30/16.
@@ -24,13 +25,13 @@ public class Authentication {
 
     public Authentication(){ }
     public Result authenticate(){
-        if(isLogged()){ return redirect("/user"); }
+        if(isLogged()){ return redirect("/"); }
         //Binding request in UserForm
         AuthUserForm userForm = Form.form(AuthUserForm.class).bindFromRequest().get();
         //If credentials are set proceed
         if(userForm.isOk()){
             //Getting user by user and pass
-            Person user = login(userForm.getUser(), userForm.getPass());
+            Person user = login(userForm.getDocument(), userForm.getPass());
             //If user exists
             if (user != null){
                 //Clear actual session and put members in new one
@@ -46,7 +47,7 @@ public class Authentication {
                 }
                 return redirect("/user");
             } else {
-                return status(401, "The user or/and password are incorrect");
+                return status(401, login.render("The user or/and password are incorrect", true, isLogged()));
                 //return ok(login.render("Usuario o contraseña incorrecta", true));
             }
         }

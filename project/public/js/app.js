@@ -10,12 +10,16 @@ app.config(['ChartJsProvider', function (ChartJsProvider) {
         responsive: true,
         maintainAspectRatio: false
     });
-}])
+}]);
 
 
 controllers.chartCtrl = function ($scope, $interval, $http) {
     $scope.labels = ["Candidate 1", "Candidate 2", "Candidate 3"];
-    $scope.data = [300, 500, 100];
+    $scope.data = [
+        Math.floor((Math.random() * 150) + 1),
+        Math.floor((Math.random() * 150) + 1),
+        Math.floor((Math.random() * 150) + 1)
+    ];
     $scope.statistics = [];
     $scope.countries = [];
 
@@ -46,6 +50,15 @@ controllers.chartCtrl = function ($scope, $interval, $http) {
         console.log("data: " + JSON.stringify($scope.data));
         $scope.$emit('$resize');
     }, 5000);
+};
+
+controllers.signupCtrl = function($scope, $http){
+    $scope.countries = [];
+
+    $http.get("/api/countries")
+        .success(function(data) {
+            $scope.countries = data;
+        });
 };
 
 app.controller(controllers);

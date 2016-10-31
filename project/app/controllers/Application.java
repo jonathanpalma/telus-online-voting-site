@@ -1,31 +1,38 @@
 package controllers;
 
+import controllers.auth.Authentication;
 import play.mvc.*;
 
+import javax.inject.Inject;
 import javax.inject.Named;
-import javax.inject.Singleton;
 
 import views.html.*;
+import views.html.auth.*;
 
 /**
  * The main set of web services.
  */
 @Named
-@Singleton
 public class Application extends Controller {
+    private Authentication auth;
 
-    //private final PersonRepository personRepository;
+    @Inject
+    public Application(Authentication auth) {
 
-    // We are using constructor injection to receive a repository to support our desire for immutability.
-    //@Inject
-    //public Application(final PersonRepository personRepository) {
-
-        //this.personRepository = personRepository;
-    //}
+        this.auth = auth;
+    }
 
     public Result index() {
+        return ok(index.render("Home", auth.isLogged()));
+    }
 
-        return ok(index.render("Home"));
+    public Result login() {
+        if(auth.isLogged()){ return redirect("/"); }
+        return ok(login.render("", false, auth.isLogged()));
+    }
 
+    public Result signup() {
+        if(auth.isLogged()){ return redirect("/"); }
+        return ok(signup.render(null, false, auth.isLogged()));
     }
 }

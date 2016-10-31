@@ -1,7 +1,7 @@
-@(header: String)
+@(header: String, isLogged: Boolean)
 @views.html.template.header(header)
 
-@views.html.template.nav(true)
+@views.html.template.nav(isLogged)
 
 <div ng-app="votingApp" ng-controller="chartCtrl">
     <div class="col s12">
@@ -12,7 +12,7 @@
     </div>
 
     <div id="presidential" class="col s12">
-        <h3>Presidential elections</h3>
+        <h4>Presidential elections</h4>
 
         <div class="select-container">
             <select>
@@ -24,7 +24,7 @@
     </div>
 
     <div id="state" class="col s12">
-        <h3>State elections</h3>
+        <h4>State elections</h4>
 
         <div class="select-container">
             <select>
@@ -40,7 +40,7 @@
     <div class="chart-container">
         <div class="dashboard row valign-wrapper">
             <div class="col s8 m8 l6">
-                <h4>Statistics</h4>
+                <h5>Statistics</h5>
 
                 <table class="statistics-table">
                     <thead>

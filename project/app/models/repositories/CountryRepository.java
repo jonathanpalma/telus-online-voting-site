@@ -8,5 +8,5 @@ import javax.inject.Singleton;
 
 @Named
 @Singleton
-public interface CountryRepository extends CrudRepository<Country, Long> {
+public interface CountryRepository extends CrudRepository<Country, Integer> {
 }

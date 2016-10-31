@@ -4,18 +4,18 @@ package models.forms;
  * Created by palma on 10/30/16.
  */
 public class AuthUserForm {
-    private String user;
+    private String document;
     private String pass;
     public AuthUserForm() { }
-    public AuthUserForm(String user, String pass) {
-        this.user = user;
+    public AuthUserForm(String document, String pass) {
+        this.document = document;
         this.pass = pass;
     }
-    public String getUser() {
-        return user;
+    public String getDocument() {
+        return document;
     }
-    public void setUser(String user) {
-        this.user = user;
+    public void setDocument(String document) {
+        this.document = document;
     }
     public String getPass() {
         return pass;
@@ -24,6 +24,6 @@ public class AuthUserForm {
         this.pass = pass;
     }
     public boolean isOk(){
-        return (this.user != null && this.pass != null);
+        return (this.document != null && this.pass != null);
     }
 }
