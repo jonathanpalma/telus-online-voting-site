@@ -3,40 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author palma
  */
 @Entity
-@Table(name = "committee")
+@Table(name = "state")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Committee.findAll", query = "SELECT c FROM Committee c"),
-    @NamedQuery(name = "Committee.findById", query = "SELECT c FROM Committee c WHERE c.id = :id"),
-    @NamedQuery(name = "Committee.findByName", query = "SELECT c FROM Committee c WHERE c.name = :name")})
-public class Committee implements Serializable {
+    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s"),
+    @NamedQuery(name = "State.findById", query = "SELECT s FROM State s WHERE s.id = :id"),
+    @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name"),
+    @NamedQuery(name = "State.findByCountryId", query = "SELECT s FROM State s WHERE s.countryId = :countryId")})
+public class State implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -46,25 +41,25 @@ public class Committee implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 30)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "committeeId")
-    private List<Candidate> candidateList;
-    @JoinColumn(name = "country_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Country countryId;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "country_id")
+    private int countryId;
 
-    public Committee() {
+    public State() {
     }
 
-    public Committee(Integer id) {
+    public State(Integer id) {
         this.id = id;
     }
 
-    public Committee(Integer id, String name) {
+    public State(Integer id, String name, int countryId) {
         this.id = id;
         this.name = name;
+        this.countryId = countryId;
     }
 
     public Integer getId() {
@@ -83,20 +78,11 @@ public class Committee implements Serializable {
         this.name = name;
     }
 
-    @XmlTransient
-    public List<Candidate> getCandidateList() {
-        return candidateList;
-    }
-
-    public void setCandidateList(List<Candidate> candidateList) {
-        this.candidateList = candidateList;
-    }
-
-    public Country getCountryId() {
+    public int getCountryId() {
         return countryId;
     }
 
-    public void setCountryId(Country countryId) {
+    public void setCountryId(int countryId) {
         this.countryId = countryId;
     }
 
@@ -110,10 +96,10 @@ public class Committee implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Committee)) {
+        if (!(object instanceof State)) {
             return false;
         }
-        Committee other = (Committee) object;
+        State other = (State) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -122,7 +108,7 @@ public class Committee implements Serializable {
 
     @Override
     public String toString() {
-        return "models.Committee[ id=" + id + " ]";
+        return "models.entities.State[ id=" + id + " ]";
     }
     
 }

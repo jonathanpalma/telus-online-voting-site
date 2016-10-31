@@ -3,33 +3,38 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author palma
  */
 @Entity
-@Table(name = "election_log")
+@Table(name = "election_type")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ElectionLog.findAll", query = "SELECT e FROM ElectionLog e"),
-    @NamedQuery(name = "ElectionLog.findById", query = "SELECT e FROM ElectionLog e WHERE e.id = :id")})
-public class ElectionLog implements Serializable {
+    @NamedQuery(name = "ElectionType.findAll", query = "SELECT e FROM ElectionType e"),
+    @NamedQuery(name = "ElectionType.findById", query = "SELECT e FROM ElectionType e WHERE e.id = :id"),
+    @NamedQuery(name = "ElectionType.findByName", query = "SELECT e FROM ElectionType e WHERE e.name = :name")})
+public class ElectionType implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -37,18 +42,24 @@ public class ElectionLog implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @JoinColumn(name = "person_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Person personId;
-    @JoinColumn(name = "election_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Election electionId;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
+    @Column(name = "name")
+    private String name;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electiontypeId")
+    private List<Election> electionList;
 
-    public ElectionLog() {
+    public ElectionType() {
     }
 
-    public ElectionLog(Integer id) {
+    public ElectionType(Integer id) {
         this.id = id;
+    }
+
+    public ElectionType(Integer id, String name) {
+        this.id = id;
+        this.name = name;
     }
 
     public Integer getId() {
@@ -59,20 +70,21 @@ public class ElectionLog implements Serializable {
         this.id = id;
     }
 
-    public Person getPersonId() {
-        return personId;
+    public String getName() {
+        return name;
     }
 
-    public void setPersonId(Person personId) {
-        this.personId = personId;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Election getElectionId() {
-        return electionId;
+    @XmlTransient
+    public List<Election> getElectionList() {
+        return electionList;
     }
 
-    public void setElectionId(Election electionId) {
-        this.electionId = electionId;
+    public void setElectionList(List<Election> electionList) {
+        this.electionList = electionList;
     }
 
     @Override
@@ -85,10 +97,10 @@ public class ElectionLog implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ElectionLog)) {
+        if (!(object instanceof ElectionType)) {
             return false;
         }
-        ElectionLog other = (ElectionLog) object;
+        ElectionType other = (ElectionType) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -97,7 +109,7 @@ public class ElectionLog implements Serializable {
 
     @Override
     public String toString() {
-        return "models.ElectionLog[ id=" + id + " ]";
+        return "models.entities.ElectionType[ id=" + id + " ]";
     }
     
 }

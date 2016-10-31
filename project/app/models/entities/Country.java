@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,24 +16,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author palma
  */
 @Entity
-@Table(name = "state")
+@Table(name = "country")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "State.findAll", query = "SELECT s FROM State s"),
-    @NamedQuery(name = "State.findById", query = "SELECT s FROM State s WHERE s.id = :id"),
-    @NamedQuery(name = "State.findByName", query = "SELECT s FROM State s WHERE s.name = :name"),
-    @NamedQuery(name = "State.findByCountryId", query = "SELECT s FROM State s WHERE s.countryId = :countryId")})
-public class State implements Serializable {
+    @NamedQuery(name = "Country.findAll", query = "SELECT c FROM Country c"),
+    @NamedQuery(name = "Country.findById", query = "SELECT c FROM Country c WHERE c.id = :id"),
+    @NamedQuery(name = "Country.findByCode", query = "SELECT c FROM Country c WHERE c.code = :code"),
+    @NamedQuery(name = "Country.findByName", query = "SELECT c FROM Country c WHERE c.name = :name")})
+public class Country implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,25 +45,30 @@ public class State implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "name")
-    private String name;
+    @Size(min = 1, max = 3)
+    @Column(name = "code")
+    private String code;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "country_id")
-    private int countryId;
+    @Size(min = 1, max = 150)
+    @Column(name = "name")
+    private String name;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "countryId")
+    private List<Committee> committeeList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "countryId")
+    private List<Person> personList;
 
-    public State() {
+    public Country() {
     }
 
-    public State(Integer id) {
+    public Country(Integer id) {
         this.id = id;
     }
 
-    public State(Integer id, String name, int countryId) {
+    public Country(Integer id, String code, String name) {
         this.id = id;
+        this.code = code;
         this.name = name;
-        this.countryId = countryId;
     }
 
     public Integer getId() {
@@ -70,6 +79,14 @@ public class State implements Serializable {
         this.id = id;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
     public String getName() {
         return name;
     }
@@ -78,12 +95,22 @@ public class State implements Serializable {
         this.name = name;
     }
 
-    public int getCountryId() {
-        return countryId;
+    @XmlTransient
+    public List<Committee> getCommitteeList() {
+        return committeeList;
     }
 
-    public void setCountryId(int countryId) {
-        this.countryId = countryId;
+    public void setCommitteeList(List<Committee> committeeList) {
+        this.committeeList = committeeList;
+    }
+
+    @XmlTransient
+    public List<Person> getPersonList() {
+        return personList;
+    }
+
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
     }
 
     @Override
@@ -96,10 +123,10 @@ public class State implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof State)) {
+        if (!(object instanceof Country)) {
             return false;
         }
-        State other = (State) object;
+        Country other = (Country) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -108,7 +135,7 @@ public class State implements Serializable {
 
     @Override
     public String toString() {
-        return "models.State[ id=" + id + " ]";
+        return "models.entities.Country[ id=" + id + " ]";
     }
     
 }

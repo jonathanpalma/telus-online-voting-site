@@ -1,4 +1,4 @@
-package models;
+package models.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -7,5 +7,5 @@ import javax.inject.Singleton;
 
 @Named
 @Singleton
-public interface RoleRepository extends CrudRepository<Role, Long> {
+public interface ElectionLogRepository extends CrudRepository<ElectionLogRepository, Long> {
 }

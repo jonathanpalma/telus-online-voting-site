@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
 
 import java.io.Serializable;
 import java.util.List;
@@ -28,13 +28,13 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author palma
  */
 @Entity
-@Table(name = "election_type")
+@Table(name = "role")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "ElectionType.findAll", query = "SELECT e FROM ElectionType e"),
-    @NamedQuery(name = "ElectionType.findById", query = "SELECT e FROM ElectionType e WHERE e.id = :id"),
-    @NamedQuery(name = "ElectionType.findByName", query = "SELECT e FROM ElectionType e WHERE e.name = :name")})
-public class ElectionType implements Serializable {
+    @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r"),
+    @NamedQuery(name = "Role.findById", query = "SELECT r FROM Role r WHERE r.id = :id"),
+    @NamedQuery(name = "Role.findByName", query = "SELECT r FROM Role r WHERE r.name = :name")})
+public class Role implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,17 +47,17 @@ public class ElectionType implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "electiontypeId")
-    private List<Election> electionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "roleId")
+    private List<Person> personList;
 
-    public ElectionType() {
+    public Role() {
     }
 
-    public ElectionType(Integer id) {
+    public Role(Integer id) {
         this.id = id;
     }
 
-    public ElectionType(Integer id, String name) {
+    public Role(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -79,12 +79,12 @@ public class ElectionType implements Serializable {
     }
 
     @XmlTransient
-    public List<Election> getElectionList() {
-        return electionList;
+    public List<Person> getPersonList() {
+        return personList;
     }
 
-    public void setElectionList(List<Election> electionList) {
-        this.electionList = electionList;
+    public void setPersonList(List<Person> personList) {
+        this.personList = personList;
     }
 
     @Override
@@ -97,10 +97,10 @@ public class ElectionType implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ElectionType)) {
+        if (!(object instanceof Role)) {
             return false;
         }
-        ElectionType other = (ElectionType) object;
+        Role other = (Role) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -109,7 +109,7 @@ public class ElectionType implements Serializable {
 
     @Override
     public String toString() {
-        return "models.ElectionType[ id=" + id + " ]";
+        return "models.entities.Role[ id=" + id + " ]";
     }
     
 }

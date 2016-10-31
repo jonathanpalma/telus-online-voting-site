@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
+package models.entities;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -17,7 +17,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,13 +24,12 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author palma
  */
 @Entity
-@Table(name = "official_participation")
+@Table(name = "election_log")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "OfficialParticipation.findAll", query = "SELECT o FROM OfficialParticipation o"),
-    @NamedQuery(name = "OfficialParticipation.findById", query = "SELECT o FROM OfficialParticipation o WHERE o.id = :id"),
-    @NamedQuery(name = "OfficialParticipation.findByVotes", query = "SELECT o FROM OfficialParticipation o WHERE o.votes = :votes")})
-public class OfficialParticipation implements Serializable {
+    @NamedQuery(name = "ElectionLog.findAll", query = "SELECT e FROM ElectionLog e"),
+    @NamedQuery(name = "ElectionLog.findById", query = "SELECT e FROM ElectionLog e WHERE e.id = :id")})
+public class ElectionLog implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -39,24 +37,18 @@ public class OfficialParticipation implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "votes")
-    private int votes;
-    @JoinColumn(name = "candidate_id", referencedColumnName = "id")
-    @ManyToOne
-    private Candidate candidateId;
+    @JoinColumn(name = "person_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Person personId;
+    @JoinColumn(name = "election_id", referencedColumnName = "id")
+    @ManyToOne(optional = false)
+    private Election electionId;
 
-    public OfficialParticipation() {
+    public ElectionLog() {
     }
 
-    public OfficialParticipation(Integer id) {
+    public ElectionLog(Integer id) {
         this.id = id;
-    }
-
-    public OfficialParticipation(Integer id, int votes) {
-        this.id = id;
-        this.votes = votes;
     }
 
     public Integer getId() {
@@ -67,20 +59,20 @@ public class OfficialParticipation implements Serializable {
         this.id = id;
     }
 
-    public int getVotes() {
-        return votes;
+    public Person getPersonId() {
+        return personId;
     }
 
-    public void setVotes(int votes) {
-        this.votes = votes;
+    public void setPersonId(Person personId) {
+        this.personId = personId;
     }
 
-    public Candidate getCandidateId() {
-        return candidateId;
+    public Election getElectionId() {
+        return electionId;
     }
 
-    public void setCandidateId(Candidate candidateId) {
-        this.candidateId = candidateId;
+    public void setElectionId(Election electionId) {
+        this.electionId = electionId;
     }
 
     @Override
@@ -93,10 +85,10 @@ public class OfficialParticipation implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof OfficialParticipation)) {
+        if (!(object instanceof ElectionLog)) {
             return false;
         }
-        OfficialParticipation other = (OfficialParticipation) object;
+        ElectionLog other = (ElectionLog) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -105,7 +97,7 @@ public class OfficialParticipation implements Serializable {
 
     @Override
     public String toString() {
-        return "models.OfficialParticipation[ id=" + id + " ]";
+        return "models.entities.ElectionLog[ id=" + id + " ]";
     }
     
 }
