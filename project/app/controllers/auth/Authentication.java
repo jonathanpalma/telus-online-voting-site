@@ -45,7 +45,7 @@ public class Authentication {
                 if (user.getRoleId().getName().equals("Admin")){
                     session().put("admin", "true");
                 }
-                return redirect("/user");
+                return redirect("/");
             } else {
                 return status(401, login.render("The user or/and password are incorrect", true, isLogged()));
                 //return ok(login.render("Usuario o contraseña incorrecta", true));
@@ -69,7 +69,7 @@ public class Authentication {
         if(isLogged()){
             session().clear();
         }
-        return redirect("/auth");
+        return redirect("/");
     }
     public Result authRedirect(String url){
         return redirect(url);

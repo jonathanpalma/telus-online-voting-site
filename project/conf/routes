@@ -14,6 +14,7 @@ GET     /login                      @controllers.Application.login()
 POST    /login                      @controllers.auth.Authentication.authenticate()
 GET     /signup                     @controllers.Application.signup()
 POST    /signup                     @controllers.crud.PersonCtrl.signup()
+GET     /logout                     @controllers.auth.Authentication.logout()
 
 GET     /api/country                @controllers.web.Api.country()
 GET     /api/countries              @controllers.web.Api.countryMinified()
