@@ -22,11 +22,18 @@
 }
 
 .chart-container {
-    padding: 50px 15% 0px 15%;
+    padding: 10px 15% 0px 15%;
 }
 
 .dashboard {
     background-color: #efefef;
     border-radius: 15px;
     padding: 15px;
+    text-align: center;
+}
+#presidential {
+    text-align: center;
+}
+#state {
+    text-align: center;
 }

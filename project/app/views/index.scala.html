@@ -12,18 +12,33 @@
     </div>
 
     <div id="presidential" class="col s12">
-
+        <h3>Presidential elections</h3>
     </div>
 
     <div id="state" class="col s12">
-
+        <h3>State elections</h3>
     </div>
 
     <div class="chart-container">
-        <div class="dashboard row">
-            <div class="col s12 m6">This div is 6-columns wide</div>
+        <div class="dashboard row valign-wrapper">
+            <div class="col s8 m8 l6">
+                <h4>Statistics</h4>
 
-            <div class="col s12 m6">
+                <table class="statistics-table">
+                    <thead>
+                        <th>Candidates</th>
+                        <th>Votes</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="s in statistics">
+                            <td>{{s.label}}</td>
+                            <td>{{s.data}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col s4 m4 l6 valign">
                 <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels" responsive="false"
                 width="350" height="200" style="display: block; width: 350px; height: 200px;">
                 </canvas>

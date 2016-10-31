@@ -16,10 +16,16 @@ app.config(['ChartJsProvider', function (ChartJsProvider) {
 controllers.chartCtrl = function ($scope, $interval) {
     $scope.labels = ["Candidate 1", "Candidate 2", "Candidate 3"];
     $scope.data = [300, 500, 100];
+    $scope.statistics = [];
+
+    for(var i = 0; i < $scope.data.length; i++){
+        $scope.statistics.push({ label: $scope.labels[i], data: $scope.data[i]}) ;
+    }
 
     $interval(function () {
         for(var i = 0; i < $scope.data.length; i++){
             $scope.data[i] += Math.floor((Math.random() * 150) + 1);
+            $scope.statistics[i].data = $scope.data[i];
         }
         console.log("data: " + JSON.stringify($scope.data));
         $scope.$emit('$resize');
